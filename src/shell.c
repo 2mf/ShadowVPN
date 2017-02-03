@@ -47,11 +47,7 @@ static int shell_run(shadowvpn_args_t *args, int is_up) {
     return 0;
   }
   buf = malloc(strlen(script) + 8);
-#ifdef TARGET_WIN32
-  sprintf(buf, "cmd /c %s", script);
-#else
   sprintf(buf, "sh %s", script);
-#endif
   logf("executing %s", script);
   if (0 != (r = system(buf))) {
     free(buf);

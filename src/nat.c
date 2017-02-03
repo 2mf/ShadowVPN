@@ -27,8 +27,6 @@
 #include <unistd.h>
 #include "portable_endian.h"
 
-#ifndef TARGET_WIN32
-
 #include <sys/select.h>
 #include <netdb.h>
 #include <netinet/in.h>
@@ -257,23 +255,4 @@ int nat_fix_downstream(nat_ctx_t *ctx, unsigned char *buf, size_t buflen,
   }
   return 0;
 }
-
-#else
-
-int nat_init(nat_ctx_t *ctx, shadowvpn_args_t *args) {
-  errf("warning: NAT server is currently not supported on Windows");
-  return 0;
-}
-
-int nat_fix_upstream(nat_ctx_t *ctx, unsigned char *buf, size_t buflen,
-                     const struct sockaddr *addr, socklen_t addrlen) {
-  return 0;
-}
-
-int nat_fix_downstream(nat_ctx_t *ctx, unsigned char *buf, size_t buflen,
-                       struct sockaddr *addr, socklen_t *addrlen) {
-  return 0;
-}
-
-#endif
 

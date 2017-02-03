@@ -58,11 +58,6 @@ typedef struct {
 
   const char *up_script;
   const char *down_script;
-#ifdef TARGET_WIN32
-  const char *tun_ip;
-  int tun_mask;
-  int tun_port;
-#endif
 } shadowvpn_args_t;
 
 int args_parse(shadowvpn_args_t *args, int argc, char **argv);

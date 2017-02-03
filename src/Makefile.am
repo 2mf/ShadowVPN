@@ -22,10 +22,6 @@ libshadowvpn_la_SOURCES = log.c \
 	uthash.h \
 	portable_endian.h
 
-if WIN32
-libshadowvpn_la_SOURCES += win32.c win32.h
-endif
-
 shadowvpn_SOURCES = main.c
 
 shadowvpn_LDADD = libshadowvpn.la

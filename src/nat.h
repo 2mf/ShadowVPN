@@ -21,14 +21,10 @@
 #ifndef NAT_H
 #define NAT_H
 
-#ifdef TARGET_WIN32
-#include "win32.h"
-#else
 #include <netdb.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
-#endif
 
 #include "uthash.h"
 

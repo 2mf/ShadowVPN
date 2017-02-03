@@ -20,22 +20,6 @@
 
 #include "shadowvpn.h"
 
-#ifdef TARGET_WIN32
-
-/* TODO: support daemonize for Windows */
-
-int daemon_start(const shadowvpn_args_t *args) {
-  errf("daemonize currently not supported, skipping");
-  return 0;
-}
-
-int daemon_stop(const shadowvpn_args_t *args) {
-  errf("daemonize currently not supported, skipping");
-  return 0;
-}
-
-#else
-
 #include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
@@ -196,4 +180,3 @@ int daemon_stop(const shadowvpn_args_t *args) {
   return 0;
 }
 
-#endif

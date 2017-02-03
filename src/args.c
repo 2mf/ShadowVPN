@@ -25,12 +25,9 @@
 
 #include "shadowvpn.h"
 
-#ifndef TARGET_WIN32
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#endif
-
 
 static const char *help_message =
 "usage: shadowvpn -c config_file [-s start/stop/restart] [-v]\n"
@@ -111,12 +108,6 @@ static int parse_config_file(shadowvpn_args_t *args, const char *filename) {
     errf("password not set in config file");
     return -1;
   }
-#ifdef TARGET_WIN32
-  if (!args->tun_ip) {
-    errf("tunip not set in config file");
-    return -1;
-  }
-#endif
   return 0;
 }
 
@@ -199,7 +190,6 @@ static int process_key_value(shadowvpn_args_t *args, const char *key,
   } else if (strcmp("user_token", key) == 0) {
     parse_user_tokens(args, strdup(value));
   }
-#ifndef TARGET_WIN32
   else if (strcmp("net", key) == 0) {
     char *p = strchr(value, '/');
     if (p) *p = 0;
@@ -209,7 +199,6 @@ static int process_key_value(shadowvpn_args_t *args, const char *key,
     }
     args->netip = ntohl((uint32_t)addr);
   }
-#endif
   else if (strcmp("mode", key) == 0) {
     if (strcmp("server", value) == 0) {
       args->mode = SHADOWVPN_MODE_SERVER;
@@ -243,15 +232,6 @@ static int process_key_value(shadowvpn_args_t *args, const char *key,
   } else if (strcmp("down", key) == 0) {
     args->down_script = strdup(value);
   }
-#ifdef TARGET_WIN32
-  else if (strcmp("tunip", key) == 0) {
-    args->tun_ip = strdup(value);
-  } else if (strcmp("tunmask", key) == 0) {
-    args->tun_mask = (int) atol(value);
-  } else if (strcmp("tunport", key) == 0) {
-    args->tun_port = (int) atol(value);
-  }
-#endif
   else {
     errf("warning: config key %s not recognized by shadowvpn, will be "
          "passed to shell scripts anyway", key);
@@ -260,19 +240,11 @@ static int process_key_value(shadowvpn_args_t *args, const char *key,
 }
 
 static void load_default_args(shadowvpn_args_t *args) {
-#ifdef TARGET_DARWIN
-  args->intf = "utun0";
-#else
   args->intf = "tun0";
-#endif
   args->mtu = 1440;
   args->pid_file = "/var/run/shadowvpn.pid";
   args->log_file = "/var/log/shadowvpn.log";
   args->concurrency = 1;
-#ifdef TARGET_WIN32
-  args->tun_mask = 24;
-  args->tun_port = TUN_DELEGATE_PORT;
-#endif
 }
 
 int args_parse(shadowvpn_args_t *args, int argc, char **argv) {
