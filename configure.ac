@@ -4,6 +4,7 @@
 AC_PREREQ([2.65])
 AC_INIT([shadowvpn],[0.2.0],[clowwindy42@gmail.com])
 AC_CONFIG_AUX_DIR([.])
+AC_CONFIG_MACRO_DIR([m4])   
 
 AC_CONFIG_SRCDIR([src/main.c])
 AC_CONFIG_HEADERS([config.h])
@@ -58,6 +59,8 @@ AC_TYPE_UINT16_T
 AC_CHECK_FUNCS([malloc realloc])
 AC_CHECK_FUNCS([inet_ntoa memset select socket strchr strdup strrchr])
 
+ss_SODIUM
+
 AC_ARG_ENABLE([debug],
     [  --enable-debug          build with additional debugging code],
     [CFLAGS="$CFLAGS -g -DDEBUG"])
@@ -80,5 +83,4 @@ AC_ARG_ENABLE([analyze],
 AM_CONDITIONAL(STATIC, test x"$static" = x"true")
 
 AC_CONFIG_FILES([Makefile src/Makefile samples/Makefile])
-AC_CONFIG_SUBDIRS([libsodium])
 AC_OUTPUT
