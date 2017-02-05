@@ -28,7 +28,6 @@
 #include "log.h"
 #include "crypto.h"
 #include "args.h"
-#include "daemon.h"
 #include "shell.h"
 #include "nat.h"
 #include "vpn.h"

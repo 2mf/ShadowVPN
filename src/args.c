@@ -250,20 +250,8 @@ static void load_default_args(shadowvpn_args_t *args) {
 int args_parse(shadowvpn_args_t *args, int argc, char **argv) {
   int ch;
   bzero(args, sizeof(shadowvpn_args_t));
-  while ((ch = getopt(argc, argv, "hs:c:v")) != -1) {
+  while ((ch = getopt(argc, argv, "hc:v")) != -1) {
     switch (ch) {
-      case 's':
-        if (strcmp("start", optarg) == 0)
-          args->cmd = SHADOWVPN_CMD_START;
-        else if (strcmp("stop", optarg) == 0)
-          args->cmd = SHADOWVPN_CMD_STOP;
-        else if (strcmp("restart", optarg) == 0)
-          args->cmd = SHADOWVPN_CMD_RESTART;
-        else {
-          errf("unknown command %s", optarg);
-          print_help();
-         }
-        break;
       case 'c':
         args->conf_file = strdup(optarg);
         break;

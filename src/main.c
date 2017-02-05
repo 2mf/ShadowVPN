@@ -27,9 +27,6 @@
 static vpn_ctx_t vpn_ctx;
 
 static void sig_handler(int signo) {
-  if (signo == SIGINT)
-    exit(1);  // for gprof
-  else
     vpn_stop(&vpn_ctx);
 }
 
@@ -39,28 +36,6 @@ int main(int argc, char **argv) {
   if (0 != args_parse(&args, argc, argv)) {
     errf("error when parsing args");
     return EXIT_FAILURE;
-  }
-  if (args.cmd == SHADOWVPN_CMD_START) {
-    if (0 != daemon_start(&args)) {
-      errf("can not start daemon");
-      return EXIT_FAILURE;
-    }
-  } else if (args.cmd == SHADOWVPN_CMD_STOP) {
-    if (0 != daemon_stop(&args)) {
-      errf("can not stop daemon");
-      return EXIT_FAILURE;
-    }
-    // always exit if we are exec stop cmd
-    return 0;
-  } else if (args.cmd == SHADOWVPN_CMD_RESTART) {
-    if (0 != daemon_stop(&args)) {
-      errf("can not stop daemon");
-      return EXIT_FAILURE;
-    }
-    if (0 != daemon_start(&args)) {
-      errf("can not start daemon");
-      return EXIT_FAILURE;
-    }
   }
 
   if (0 != crypto_init()) {

@@ -30,16 +30,8 @@ typedef enum {
   SHADOWVPN_MODE_CLIENT = 2
 } shadowvpn_mode;
 
-typedef enum {
-  SHADOWVPN_CMD_NONE = 0,
-  SHADOWVPN_CMD_START,
-  SHADOWVPN_CMD_STOP,
-  SHADOWVPN_CMD_RESTART
-} shadowvpn_cmd;
-
 typedef struct {
   shadowvpn_mode mode;
-  shadowvpn_cmd cmd;
   const char *conf_file;
   const char *pid_file;
   const char *log_file;

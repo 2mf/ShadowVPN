@@ -16,8 +16,6 @@ libshadowvpn_la_SOURCES = log.c \
 	vpn.c \
 	args.h \
 	args.c \
-	daemon.h \
-	daemon.c \
 	shadowvpn.h \
 	uthash.h \
 	portable_endian.h
