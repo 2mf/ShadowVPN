@@ -173,18 +173,6 @@ static int process_key_value(shadowvpn_args_t *args, const char *key,
     args->server = strdup(value);
   } else if (strcmp("port", key) == 0) {
     args->port = atol(value);
-  } else if (strcmp("concurrency", key) == 0) {
-    errf("warning: concurrency is temporarily disabled on this version, "
-         "make sure to set concurrency=1 on the other side");
-    args->concurrency = atol(value);
-    if (args->concurrency == 0) {
-      errf("concurrency should >= 1");
-      return -1;
-    }
-    if (args->concurrency > 100) {
-      errf("concurrency should <= 100");
-      return -1;
-    }
   } else if (strcmp("password", key) == 0) {
     args->password = strdup(value);
   } else if (strcmp("user_token", key) == 0) {
@@ -244,7 +232,6 @@ static void load_default_args(shadowvpn_args_t *args) {
   args->mtu = 1440;
   args->pid_file = "/var/run/shadowvpn.pid";
   args->log_file = "/var/log/shadowvpn.log";
-  args->concurrency = 1;
 }
 
 int args_parse(shadowvpn_args_t *args, int argc, char **argv) {

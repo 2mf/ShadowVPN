@@ -261,7 +261,6 @@ int vpn_run(vpn_ctx_t *ctx) {
       if (ctx->remote_addrlen) {
         crypto_encrypt(ctx->udp_buf, ctx->tun_buf, r + usertoken_len);
 
-        // TODO concurrency is currently removed
         int sock_to_send = ctx->socks[0];
 
         r = sendto(sock_to_send, ctx->udp_buf + SHADOWVPN_PACKET_OFFSET,

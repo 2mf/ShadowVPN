@@ -40,7 +40,6 @@ typedef struct {
   const char *server;
   uint16_t port;
   uint16_t mtu;
-  uint16_t concurrency;
 
   // the ip of the "net" configuration
   // in host order
