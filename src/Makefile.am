@@ -10,15 +10,11 @@ libshadowvpn_la_SOURCES = log.c \
 	crypto.c \
 	shell.h \
 	shell.c \
-	nat.h \
-	nat.c \
 	vpn.h \
 	vpn.c \
 	args.h \
 	args.c \
-	shadowvpn.h \
-	uthash.h \
-	portable_endian.h
+	shadowvpn.h 
 
 shadowvpn_SOURCES = main.c
 

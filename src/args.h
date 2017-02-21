@@ -44,8 +44,6 @@ typedef struct {
   // the ip of the "net" configuration
   // in host order
   uint32_t netip;
-  char (*user_tokens)[8];
-  size_t user_tokens_len;
 
   const char *up_script;
   const char *down_script;

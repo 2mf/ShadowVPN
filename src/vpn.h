@@ -22,9 +22,9 @@
 #define VPN_H
 
 #include <time.h>
+#include <sys/socket.h>
 
 #include "args.h"
-#include "nat.h"
 
 typedef struct {
   int running;
@@ -44,8 +44,6 @@ typedef struct {
   socklen_t remote_addrlen;
   shadowvpn_args_t *args;
 
-  /* server with NAT enabled only */
-  nat_ctx_t *nat_ctx;
 } vpn_ctx_t;
 
 /* return -1 on error. no need to destroy any resource */

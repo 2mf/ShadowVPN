@@ -111,54 +111,6 @@ static int parse_config_file(shadowvpn_args_t *args, const char *filename) {
   return 0;
 }
 
-static int parse_user_tokens(shadowvpn_args_t *args, char *value) {
-  char *sp_pos;
-  char *start = value;
-  int len = 0, i = 0;
-  if (value == NULL) {
-    return 0;
-  }
-  len++;
-  while (*value) {
-    if (*value == ',') {
-      len++;
-    }
-    value++;
-  }
-  args->user_tokens_len = len;
-  args->user_tokens = calloc(len, 8);
-  bzero(args->user_tokens, 8 * len);
-  value = start;
-  while (*value) {
-    int has_next = 0;
-    sp_pos = strchr(value, ',');
-    if (sp_pos > 0) {
-      has_next = 1;
-      *sp_pos = 0;
-    }
-    int p = 0;
-    while (*value && p < 8) {
-      unsigned int temp;
-      int r = sscanf(value, "%2x", &temp);
-      if (r > 0) {
-        args->user_tokens[i][p] = temp;
-        value += 2;
-        p ++;
-      } else {
-        break;
-      }
-    }
-    i++;
-    if (has_next) {
-      value = sp_pos + 1;
-    } else {
-      break;
-    }
-  }
-  free(start);
-  return 0;
-}
-
 static int process_key_value(shadowvpn_args_t *args, const char *key,
                       const char *value) {
   if (strcmp("password", key) != 0) {
@@ -175,9 +127,7 @@ static int process_key_value(shadowvpn_args_t *args, const char *key,
     args->port = atol(value);
   } else if (strcmp("password", key) == 0) {
     args->password = strdup(value);
-  } else if (strcmp("user_token", key) == 0) {
-    parse_user_tokens(args, strdup(value));
-  }
+  } 
   else if (strcmp("net", key) == 0) {
     char *p = strchr(value, '/');
     if (p) *p = 0;
