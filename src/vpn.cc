@@ -155,7 +155,7 @@ int vpn_ctx_init(vpn_ctx_t *ctx, shadowvpn_args_t *args) {
     return -1;
   }
   ctx->nsock = 1;
-  ctx->socks = calloc(ctx->nsock, sizeof(int));
+  ctx->socks = (int*)calloc(ctx->nsock, sizeof(int));
   for (i = 0; i < ctx->nsock; i++) {
     int *sock = ctx->socks + i;
     if (-1 == (*sock = vpn_udp_alloc(args->mode == SHADOWVPN_MODE_SERVER,
@@ -185,9 +185,9 @@ int vpn_run(vpn_ctx_t *ctx) {
 
   shell_up(ctx->args);
 
-  ctx->tun_buf = malloc(ctx->args->mtu + SHADOWVPN_ZERO_BYTES +
+  ctx->tun_buf = (unsigned char*)malloc(ctx->args->mtu + SHADOWVPN_ZERO_BYTES +
                         usertoken_len);
-  ctx->udp_buf = malloc(ctx->args->mtu + SHADOWVPN_ZERO_BYTES +
+  ctx->udp_buf = (unsigned char*)malloc(ctx->args->mtu + SHADOWVPN_ZERO_BYTES +
                         usertoken_len);
   bzero(ctx->tun_buf, SHADOWVPN_ZERO_BYTES);
   bzero(ctx->udp_buf, SHADOWVPN_ZERO_BYTES);

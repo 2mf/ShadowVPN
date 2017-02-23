@@ -45,7 +45,7 @@ static void print_help() __attribute__ ((noreturn));
 static void load_default_args(shadowvpn_args_t *args);
 
 static int process_key_value(shadowvpn_args_t *args, const char *key,
-                      const char *value);
+                      char *value);
 
 static void print_help() {
   printf("%s", help_message);
@@ -112,7 +112,7 @@ static int parse_config_file(shadowvpn_args_t *args, const char *filename) {
 }
 
 static int process_key_value(shadowvpn_args_t *args, const char *key,
-                      const char *value) {
+                      char *value) {
   if (strcmp("password", key) != 0) {
     // set environment variables so that up/down script can
     // make use of these values
@@ -129,7 +129,7 @@ static int process_key_value(shadowvpn_args_t *args, const char *key,
     args->password = strdup(value);
   } 
   else if (strcmp("net", key) == 0) {
-    char *p = strchr(value, '/');
+    char* p = strchr(value, '/');
     if (p) *p = 0;
     in_addr_t addr = inet_addr(value);
     if (addr == INADDR_NONE) {

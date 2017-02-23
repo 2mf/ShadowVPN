@@ -6,12 +6,13 @@ AC_INIT([shadowvpn],[0.2.0],[clowwindy42@gmail.com])
 AC_CONFIG_AUX_DIR([.])
 AC_CONFIG_MACRO_DIR([m4])   
 
-AC_CONFIG_SRCDIR([src/main.c])
+AC_CONFIG_SRCDIR([src/main.cc])
 AC_CONFIG_HEADERS([src/config.h])
 
 AM_INIT_AUTOMAKE([1.11 dist-bzip2 tar-ustar foreign subdir-objects])
 
 # Checks for programs.
+AC_LANG_CPLUSPLUS
 AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_RANLIB
@@ -21,6 +22,7 @@ LT_INIT
 # Checks for header files.
 AC_HEADER_RESOLV
 AC_CHECK_HEADERS([arpa/inet.h fcntl.h netdb.h stdlib.h string.h sys/socket.h unistd.h])
+AC_CHECK_HEADERS(vector,, AC_MSG_WARN(STL classes missing ?))
 
 # from OpenVPN configure.ac
 case "$host" in
